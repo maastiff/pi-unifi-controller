@@ -1,0 +1,8 @@
+# Created by https://www.gitignore.io
+
+### Intellij ###
+.idea
+
+### Ansible ###
+*.retry
+ansible_vault_password
