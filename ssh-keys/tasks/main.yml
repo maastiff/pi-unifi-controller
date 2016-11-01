@@ -1,0 +1,16 @@
+---
+
+- name: Enable SSH Keys for user ansible
+  authorized_key: user=ansible key="{{ lookup('file', item )}}"
+  with_fileglob:
+    - enabled/*
+
+- name: Enable extra SSH Keys for user ansible
+  authorized_key: user=ansible key="{{ item }}"
+  with_items: extra_ssh_keys
+  when: extra_ssh_keys is defined
+
+- name: Disable SSH Keys for user ansible
+  authorized_key: user=ansible key="{{ lookup('file', item) }}" state=absent
+  with_fileglob:
+    - disabled/*
