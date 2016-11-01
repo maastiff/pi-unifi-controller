@@ -1,0 +1,11 @@
+---
+
+- hosts: all
+  roles:
+    - role: common
+  tags: common
+
+- hosts: raspberrypi
+  roles:
+    - role: unifi
+  tags: unifi

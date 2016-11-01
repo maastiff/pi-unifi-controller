@@ -1,0 +1,7 @@
+---
+
+- name: Ensure Java is installed
+  become: yes
+  apt:
+    name: oracle-java{{ oracle_java_version }}-jdk
+    state: present

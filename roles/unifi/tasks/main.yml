@@ -1,0 +1,37 @@
+---
+
+- name: Configure the ubnt apt repository
+  become: yes
+  apt_repository:
+    repo: 'deb http://www.ubnt.com/downloads/unifi/debian unifi5 ubiquiti'
+    update_cache: yes
+    state: present
+
+- name: Configure the ubnt apt key
+  become: yes
+  apt_key:
+    id: C0A52C50
+    keyserver: keyserver.ubuntu.com
+    state: present
+
+
+- name: Install UniFi controller
+  become: yes
+  apt:
+    name: unifi
+    allow_unauthenticated: yes
+    state: present
+
+- name: Configure Oracle JDK as default
+  become: yes
+  alternatives:
+    name: java
+    path: "{{ java_oracle_path }}"
+  notify: Restart UniFi controller
+
+- name: Start UniFi controller
+  become: yes
+  service:
+    name: unifi
+    state: started
+    enabled: yes
