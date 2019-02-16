@@ -1,0 +1,8 @@
+---
+
+- name: Verify Ansible meets version requirements
+  assert:
+    that: ansible_version.full is version_compare('2.7', '>=')
+    success_msg: Ansible version {{ ansible_version.full }} meet requirements.
+    fail_msg: You must update Ansible to at least 2.7 to run this playbook.
+  tags: always

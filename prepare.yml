@@ -1,6 +1,11 @@
 ---
 
 - hosts: all
+  roles:
+    - role: prerequisites
+      tags: always
+
+- hosts: all
   become: yes
   tasks:
   - name: Add ansible user
@@ -15,7 +20,8 @@
 - hosts: all
   become: yes
   roles:
-    - { role: ssh-keys, tags: ['ssh-keys'] }
+    - role: ssh-keys
+      tags: ssh-keys
 
 - hosts: all
   become: yes
@@ -30,8 +36,8 @@
 - hosts: all
   become: yes
   tasks:
-  - name: Restart sshd
+  - name: Restart ssh service
     service:
-      name: sshd
+      name: ssh
       state: restarted
       enabled: yes

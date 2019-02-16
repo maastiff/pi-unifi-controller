@@ -2,6 +2,11 @@
 
 - hosts: all
   roles:
+    - role: prerequisites
+      tags: always
+
+- hosts: all
+  roles:
     - role: common
   tags: common
 
