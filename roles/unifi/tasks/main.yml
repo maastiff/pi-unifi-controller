@@ -31,7 +31,7 @@
 - name: Install UniFi controller
   become: yes
   apt:
-    name: unifi
+    name: unifi={{ unifi_version }}
     state: present
     allow_unauthenticated: yes
     update_cache: yes
