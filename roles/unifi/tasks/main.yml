@@ -1,11 +1,18 @@
 ---
 
-- name: Configure the ubnt apt repository
+- name: Install Java 8
   become: yes
-  apt_repository:
-    repo: 'deb http://www.ubnt.com/downloads/unifi/debian unifi5 ubiquiti'
-    update_cache: yes
+  apt:
+    name: openjdk-8-jre-headless
     state: present
+  notify: Restart UniFi controller
+
+#- name: Configure Oracle JDK as default
+#  become: yes
+#  alternatives:
+#    name: java
+#    path: "{{ java_oracle_path }}"
+#  notify: Restart UniFi controller
 
 - name: Configure the ubnt apt key
   become: yes
@@ -14,19 +21,22 @@
     keyserver: keyserver.ubuntu.com
     state: present
 
+- name: Configure the ubnt apt repository
+  become: yes
+  apt_repository:
+    repo: 'deb http://www.ubnt.com/downloads/unifi/debian stable ubiquiti'
+    update_cache: yes
+    state: present
 
 - name: Install UniFi controller
   become: yes
   apt:
     name: unifi
-    allow_unauthenticated: yes
     state: present
-
-- name: Configure Oracle JDK as default
-  become: yes
-  alternatives:
-    name: java
-    path: "{{ java_oracle_path }}"
+    allow_unauthenticated: yes
+    update_cache: yes
+    autoclean: yes
+    autoremove: yes
   notify: Restart UniFi controller
 
 - name: Start UniFi controller
