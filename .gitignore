@@ -4,6 +4,7 @@
 
 ### Ansible ###
 *.retry
+ansible_vault_password
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
